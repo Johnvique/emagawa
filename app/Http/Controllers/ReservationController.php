@@ -36,7 +36,17 @@ class ReservationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $reservations = new Reservation;
+        $reservations->guest_name=$request->get('guest_name');
+        $reservations->check_in=$request->get('check_in');
+        $reservations->check_out=$request->get('check_out');
+        $reservations->service_booked=$request->get('service_booked');
+        $reservations->guest_phone=$request->get('guest_phone');
+        $reservations->guest_email=$request->get('guest_email');
+        $reservations->book_message=$request->get('book_message'); 
+
+        $reservations->save();
+        return redirect()->back();
     }
 
     /**
@@ -56,9 +66,11 @@ class ReservationController extends Controller
      * @param  \App\Reservation  $reservation
      * @return \Illuminate\Http\Response
      */
-    public function edit(Reservation $reservation)
+    public function edit($id)
     {
-        //
+        $reservation =Reservation::find($id);
+        return view('dashboard/reserve_edit', compact('reservation'));
+        return redirect('reservation');
     }
 
     /**
@@ -68,9 +80,21 @@ class ReservationController extends Controller
      * @param  \App\Reservation  $reservation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Reservation $reservation)
+    public function update(Request $request,$id)
     {
-        //
+        $reservation = Reservation::find($id);
+        $reservation->update([
+            'guest_name'=>$request->guest_name,
+            'check_in'=>$request->check_in,
+            'check_out'=>$request->check_out,
+            'service_booked'=>$request->service_booked,
+            'guest_phone'=>$request->guest_phone,
+            'guest_email'=>$request->guest_email,
+            'book_message'=>$request->book_message,
+
+        ]);
+
+        return redirect('reservation');
     }
 
     /**
@@ -79,8 +103,11 @@ class ReservationController extends Controller
      * @param  \App\Reservation  $reservation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Reservation $reservation)
+    public function destroy($id)
     {
-        //
+        $reservation = Reservation::find($id);
+        $reservation->delete();
+
+        return redirect('reservation');
     }
 }

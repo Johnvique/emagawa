@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Service;
+use App\Notice;
 use Illuminate\Http\Request;
 
-class ServiceController extends Controller
+class NoticeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = Service::all();
-        return view('dashboard/service',compact('services'));
+        $notices = Notice::all();
+        return view('dashboard/notice',compact('notices'));
     }
 
     /**
@@ -36,24 +36,21 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
-        $services=new Service;
-        $services->service_name=$request->get('service_name');
-        $services->service_status=$request->get('service_status');
-        $services->service_price=$request->get('service_price');
-        $services->service_type=$request->get('service_type');
-        $services->gender=$request->get('gender');
+        $notice = new Notice;
+        $notice->title=$request->get('title');
+        $notice->body=$request->get('body');
 
-        $services->save();
+        $notice->save();
         return redirect()->back();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Service  $service
+     * @param  \App\Notice  $notice
      * @return \Illuminate\Http\Response
      */
-    public function show(Service $service)
+    public function show(Notice $notice)
     {
         //
     }
@@ -61,49 +58,46 @@ class ServiceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Service  $service
+     * @param  \App\Notice  $notice
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $service = Service::find($id);
-        return view('dashboard/service_edit',compact('service'));
-        
-        return redirect('service');
+        $notice = Notice::find($id);
+        return view('dashboard/notice_edit',compact('notice'));
+
+        return redirect('notice');
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Service  $service
+     * @param  \App\Notice  $notice
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request,$id)
     {
-        $service = Service::find($id);
-        $service->update([
-            'service_name'=>$request->service_name,
-            'service_status'=>$request->service_status,
-            'service_price'=>$request->service_price,
-            'service_type'=>$request->service_type,
-            'gender'=>$request->gender,
+        $notice = Notice::find($id);
+        $notice->update([
+            'title'=>$request->title,
+            'body'=>$request->body,
         ]);
 
-        return redirect('service');
+        return redirect('notice');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Service  $service
+     * @param  \App\Notice  $notice
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $service = Service::find($id);
-        $service->delete();
+        $notice = Notice::find($id);
+        $notice->delete();
 
-        return redirect('service');
+        return redirect('notice');
     }
 }

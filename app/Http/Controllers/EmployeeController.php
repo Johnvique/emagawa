@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use File;
 use App\Employee;
 use Illuminate\Http\Request;
 
@@ -36,7 +36,29 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->hasFile('image')) {
+            $filenameWithExt = $request->file('image')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+            $path = $request->file('image')->move(public_path('pictures'), $fileNameToStore);
+        } else {
+            $fileNameToStore = 'default.jpg';
+        }
+
+
+        $employees =new Employee;
+        $employees->name=$request->get('name');
+        $employees->email=$request->get('email'); 
+        $employees->phone=$request->get('phone'); 
+        $employees->id_no=$request->get('id_no'); 
+        $employees->location=$request->get('location'); 
+        $employees->role=$request->get('role'); 
+        $employees->gender=$request->get('gender'); 
+        $employees->image=$fileNameToStore; 
+        
+        $employees->save();
+        return redirect()->back();
     }
 
     /**
@@ -56,9 +78,10 @@ class EmployeeController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function edit(Employee $employee)
+    public function edit($id)
     {
-        //
+        $employee = Employee::find($id);
+        return view('dashboard/employee_edit',compact('employee'));
     }
 
     /**
@@ -68,9 +91,21 @@ class EmployeeController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Employee $employee)
+    public function update(Request $request,$id)
     {
-        //
+        $employee =Employee::find($id);
+        $employee->update([
+            'name'=>$request->name,
+            'email'=>$request->email,
+            'phone'=>$request->phone,
+            'id_no'=>$request->id_no,
+            'location'=>$request->location,
+            'role'=>$request->role,
+            'gender'=>$request->gender,
+            'image'=>$request->image,
+        ]);
+
+        return redirect('employee');
     }
 
     /**
@@ -79,8 +114,12 @@ class EmployeeController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Employee $employee)
+    public function destroy($id)
     {
-        //
+        $employee =Employee::find($id);
+        file::delete('pictures/'.$employee->image);
+        $employee->delete();
+
+        return redirect('employee');
     }
 }

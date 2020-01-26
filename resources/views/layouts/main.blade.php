@@ -33,7 +33,7 @@
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url('/')}}">
         <div class="sidebar-brand-icon rotate-n-15">
-            <img class="img-sider rounded-circle" src="{{asset('img/admin1.png')}}" alt="img-thumnail" 
+            <img class="img-sider rounded-circle" src="{{asset('pictures/admin1.png')}}" alt="img-thumnail" 
             style="width: 5em; height: 5em">
         </div>
         <div class="sidebar-brand-text mx-3">Magawa Hotel</div>
@@ -127,6 +127,13 @@
           <span>Hotel Employees</span></a>
       </li>
 
+            <!-- Notice area -->
+            <li class="nav-item">
+              <a class="nav-link" href="{{url('/notice')}}">
+              <i class="fas fa-fw fa-user"></i>
+                <span>Notice</span></a>
+            </li>
+
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 
@@ -192,7 +199,7 @@
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
-              <img class="img-profile rounded-circle" src="{{asset('img/admin2.png')}}">
+              <img class="img-profile rounded-circle" src="{{asset('pictures/admin2.png')}}">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

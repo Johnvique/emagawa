@@ -16,30 +16,15 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/dashboard/index', function () {
-        return view('dashboard/index');
-    });
-    Route::get('/dashboard/chef', function () {
-        return view('dashboard/chef');
-    });
-    Route::get('/dashboard/employee', function () {
-        return view('dashboard/employee');
-    });
-    Route::get('/dashboard/guest', function () {
-        return view('dashboard/guest');
-    });
-    Route::get('/dashboard/menu', function () {
-        return view('dashboard/menu');
-    });
-    Route::get('/dashboard/reservation', function () {
-        return view('dashboard/reservation');
-    });
-    Route::get('/dashboard/room', function () {
-        return view('dashboard/room');
-    });
-    Route::get('/dashboard/service', function () {
-        return view('dashboard/service');
-    });
+    Route::get('dashboard/index', 'DashboardController@index');
+    Route::get('dashboard/chef', 'ChefController@index');
+    Route::get('dashboard/employee', 'EmployeeController@index');
+    Route::get('dashboard/guest', 'GuestController@index');
+    Route::get('dashboard/menu', 'MenuController@index');
+    Route::get('dashboard/reservation', 'ReservationController@index');
+    Route::get('dashboard/room', 'RoomController@index');
+    Route::get('dashboard/service', 'ServiceController@index');
+    Route::get('dashboard/notice', 'NoticeController@index');
 });
 
 Auth::routes();
@@ -52,3 +37,4 @@ Route::resource('menu', 'MenuController');
 Route::resource('reservation', 'ReservationController');
 Route::resource('room', 'RoomController');
 Route::resource('service', 'ServiceController');
+Route::resource('notice', 'NoticeController');

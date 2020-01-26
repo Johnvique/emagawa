@@ -33,7 +33,8 @@
         <div class="modal-body">
           <div class="card">
             <div class="card-body">
-              <form>
+            <form action="{{route('guest.store')}}" method="POST" enctype="multipart/form-data">
+              @csrf
                 <div class="form-group form-inline">
                   <label for="user">Name: </label>
                   <input type="name" name="name" class="form-control" id="user" placeholder="Name">
@@ -57,6 +58,7 @@
               <div class="form-group form-inline">
                 <label for="type">Type: </label>
                 <select name="type">
+                  <option>--select guest type--</option>
                   <option>Adult</option>
                   <option>Child</option>
                 </select>
@@ -72,13 +74,15 @@
               <div class="form-group form-inline">
                 <label for="gen">Gender: </label>
                 <select name="gender">
+                  <option>--select gender--</option>
                   <option>Male</option>
                   <option>Female</option>
                 </select>
               </div>
               <div class="form-group form-inline">
-                <label for="img">Image: </label>
-                <input type="text" name="image" class="form-control" id="img" placeholder="Fix Image Here">
+                <label for="image">Image: </label>
+                <input type="file" name="image" class="form-control" id="image"  placeholder="Upload the Image Here"
+                 onchange="return imageval()">
               </div>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                 <button type="submit" class="btn btn-info">Submit</button>
@@ -134,23 +138,29 @@
                     </tr>
                   </tfoot>
                   <tbody>
+                    @foreach ($guests as $guest)
                     <tr>
-                      <th>01</th>
-                      <td>Donna Snider</td>
-                      <td>donna@mail.com</td>
-                      <td>+25471234567</td>
-                      <td>27512390</td>
-                      <td>Mombasa</td>
-                      <td>Adult</td>
-                      <td>Conference Hall</td>
-                      <td>13</td>
-                      <td>Male</td>
-                      <td>image</td>
+                    <th>{{$guest->id}}</th>
+                      <td>{{$guest->name}}</td>
+                      <td>{{$guest->email}}</td>
+                      <td>{{$guest->phone}}</td>
+                      <td>{{$guest->id_no}}</td>
+                      <td>{{$guest->location}}</td>
+                      <td>{{$guest->type}}</td>
+                      <td>{{$guest->service}}</td>
+                      <td>{{$guest->number}}</td>
+                      <td>{{$guest->gender}}</td>
+                      <td><img class="img-responsive" style="width:60px" src="{{asset('pictures/'.$guest->image)}}"/></td>
                       <td>
-                        <a  href="" class="btn btn-info fa fa-edit btn-sm"></a>
-                        <a  href="" class="btn btn-danger fa fa-trash-alt btn-sm"></a>
+                      <a  href="{{action('GuestController@edit', $guest->id)}}" class="btn btn-info fa fa-edit btn-sm"></a>
+                      <form action="{{action('GuestController@destroy', $guest->id)}}" method="POST">
+                        @csrf
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button class="btn btn-danger fa fa-trash-alt btn-sm"></button>
+                        </form>
                       </td>
-                    </tr>
+                    </tr>     
+                    @endforeach
                   </tbody>
                 </table>
               </div>

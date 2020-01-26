@@ -33,7 +33,8 @@
         <div class="modal-body">
           <div class="card">
             <div class="card-body">
-              <form>
+            <form action="{{route('room.store')}}" method="POST">
+              @csrf
                   <div class="form-group form-inline">
                     <label for="user">Title: </label>
                     <input type="text" name="title" class="form-control" id="user" placeholder="Name">
@@ -45,6 +46,7 @@
                 <div class="form-group form-inline">
                   <label for="type">Type: </label>
                   <select name="type">
+                    <option>--Select Room Type--</option>
                     <option>Standard Room</option>
                     <option>Family Room</option>
                     <option>Single Room</option>
@@ -68,6 +70,7 @@
                 <div class="form-group form-inline">
                   <label for="status">Status: </label>
                   <select name="status">
+                    <option>--Select Room Status--</option>
                     <option>Booked</option>
                     <option>Available</option>
                     <option>Pending</option>
@@ -127,21 +130,27 @@
                     </tr>
                   </tfoot>
                   <tbody>
+                    @foreach ($rooms as $room)
                     <tr>
-                      <th>02</th>
-                      <td>Menengai House</td>
-                      <td>5</td>
-                      <td>Special Room</td>
-                      <td>No.28</td>
-                      <td>ksh.30,500</td>
-                      <td>4 by 6</td>
-                      <td>Booked</td>
-                      <td>Wifi,TV, Hot Shower</td>
+                      <th>{{$room->id}}</th>
+                      <td>{{$room->title}}</td>
+                      <td>{{$room->size}}</td>
+                      <td>{{$room->type}}</td>
+                      <td>{{$room->number}}</td>
+                      <td>{{$room->price}}</td>
+                      <td>{{$room->bed_type}}</td>
+                      <td>{{$room->status}}</td>
+                      <td>{{$room->facility}}</td>
                       <td>
-                        <a  href="" class="btn btn-info fa fa-edit btn-sm"></a>
-                        <a  href="" class="btn btn-danger fa fa-trash-alt btn-sm"></a>
+                      <a  href="{{action('RoomController@edit', $room->id)}}" class="btn btn-info fa fa-edit btn-sm"></a>
+                      <form action="{{action('RoomController@destroy', $room->id)}}" method="POST">
+                        @csrf
+                      <input type="hidden" name="_method" value="DELETE">
+                      <button class="btn btn-danger  fa fa-trash-alt btn-sm"></button>
+                        </form>
                       </td>
-                    </tr>
+                    </tr> 
+                    @endforeach
                   </tbody>
                 </table>
               </div>

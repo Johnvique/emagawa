@@ -18,11 +18,11 @@
                       <div class="card-body">
                         <div class="row no-gutters align-items-center">
                           <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Our Services</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">21</div>
+                          <div class="text-xs font-weight-bold text-info text-uppercase mb-1"><a href="{{url('dashboard/service')}}">Our Services</a></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">({{$services_count}}) services</div>
                           </div>
                           <div class="col-auto">
-                            <i class="fas fa-wrench fa-2x text-gray-300"></i>
+                            <i class="fas fa-handshake fa-2x text-gray-300"></i>
                           </div>
                         </div>
                       </div>
@@ -35,8 +35,8 @@
                       <div class="card-body">
                         <div class="row no-gutters align-items-center">
                           <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Registered Guests</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">185</div>
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1"><a href="{{url('dashboard/guest')}}">Registered Guests</a></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">({{$guests_count}}) guests</div>
                           </div>
                           <div class="col-auto">
                             <i class="fas fa-users fa-2x text-gray-300"></i>
@@ -52,10 +52,10 @@
                       <div class="card-body">
                         <div class="row no-gutters align-items-center">
                           <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Available Rooms</div>
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1"><a href="{{url('dashboard/room')}}">Available Rooms</a></div>
                             <div class="row no-gutters align-items-center">
                               <div class="col-auto">
-                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50</div>
+                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">({{$rooms_count}}) rooms</div>
                               </div>
                               <div class="col">
                               </div>
@@ -71,15 +71,15 @@
       
 <!--Available Reservations -->
                   <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card border-left-secondary shadow h-100 py-2">
                       <div class="card-body">
                         <div class="row no-gutters align-items-center">
                           <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Reservations</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                            <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1"><a href="{{url('dashboard/reservation')}}">Reservations Made</a></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">({{$reservations_count}}) bookings</div>
                           </div>
                           <div class="col-auto">
-                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                            <i class="fas fa-anchor fa-2x text-gray-300"></i>
                           </div>
                         </div>
                       </div>
@@ -88,15 +88,15 @@
 
 <!-- Cooks Area -->
                     <div class="col-xl-3 col-md-6 mb-4">
-                                        <div class="card border-left-info shadow h-100 py-2">
+                                        <div class="card border-left-secondary shadow h-100 py-2">
                                           <div class="card-body">
                                             <div class="row no-gutters align-items-center">
                                               <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Our Chefs/Cooks</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">44</div>
+                                                <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1"><a href="{{url('dashboard/chef')}}">Experienced Cooks</a></div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">({{$chefs_count}}) chefs</div>
                                               </div>
                                               <div class="col-auto">
-                                                <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                                <i class="fas fa-user-plus fa-2x text-gray-300"></i>
                                               </div>
                                             </div>
                                           </div>
@@ -105,12 +105,29 @@
 
 <!-- Employees -->
                   <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card border-left-secondary shadow h-100 py-2">
                       <div class="card-body">
                         <div class="row no-gutters align-items-center">
                           <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Hotel Employees</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">63</div>
+                            <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1"><a href="{{url('dashboard/employee')}}">Hotel Employees</a></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">({{$employees_count}}) employees</div>
+                          </div>
+                          <div class="col-auto">
+                            <i class="fas fa-user fa-2x text-gray-300"></i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Hotel Notices -->
+                  <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-secondary shadow h-100 py-2">
+                      <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                          <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1"><a href="{{url('dashboard/notice')}}">Office Notices</a></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">({{$notices_count}}) notices</div>
                           </div>
                           <div class="col-auto">
                             <i class="fas fa-comments fa-2x text-gray-300"></i>

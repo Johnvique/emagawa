@@ -33,25 +33,26 @@
         <div class="modal-body">
           <div class="card">
             <div class="card-body">
-              <form>
+            <form action="{{route('service.store')}}" method="POST">
+              @csrf
                 <div class="form-group">
-                  <label for="service_name">Service Name</label>
-                  <input type="text" class="form-control" name="services_name" id="service_name" placeholder="Name of the service" required>
+                  <label for="services_name">Service Name</label>
+                  <input type="text" class="form-control" name="service_name" id="services_name" placeholder="Name of the service" required>
                 </div>
                 <div class="form-group form-inline">
-                  <label for="type">Status: </label>
-                  <select name="type">
+                  <label for="status">Status: </label>
+                  <select name="service_status">
                     <option>Available</option>
                     <option>Not Available</option>
                   </select>
                 </div>
                 <div class="form-group">
                   <label for="serve_price">Service Price</label>
-                  <input type="text" class="form-control" name="services_price" id="serve_price" placeholder="Price of the service" required>
+                  <input type="text" class="form-control" name="service_price" id="serve_price" placeholder="Price of the service" required>
                 </div>
                 <div class="form-group form-inline">
                   <label for="type">Service Type: </label>
-                  <select name="type">
+                  <select name="service_type">
                     <option>Events</option>
                     <option>Recreation</option>
                     <option>Restaurant</option>
@@ -106,18 +107,24 @@
                     </tr>
                   </tfoot>
                   <tbody>
+                    @foreach ($services as $service)
                     <tr>
-                      <th>01</th>
-                      <td>Swimming Pool</td>
-                      <td>Available</td>
-                      <td>ksh.25,800</td>
-                      <td>Recreation</td>
-                      <td>Female</td>
+                    <th>{{$service->id}}</th>
+                      <td>{{$service->service_name}}</td>
+                      <td>{{$service->service_status}}</td>
+                      <td>{{$service->service_price}}</td>
+                      <td>{{$service->service_type}}</td>
+                      <td>{{$service->gender}}</td>
                       <td>
-                        <a  href="" class="btn btn-info fa fa-edit btn-sm"></a>
-                        <a  href="" class="btn btn-danger fa fa-trash-alt btn-sm"></a>
+                      <a  href="{{action('ServiceController@edit', $service->id)}}" class="btn btn-info fa fa-edit btn-sm"></a>
+                      <form action="{{action('ServiceController@destroy', $service->id)}}" method="POST">
+                        @csrf
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button class="btn btn-danger fa fa-trash-alt btn-sm"></button>
+                      </form>
                       </td>
-                    </tr>
+                    </tr>  
+                    @endforeach
                   </tbody>
                 </table>
               </div>

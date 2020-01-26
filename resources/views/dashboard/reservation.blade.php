@@ -33,10 +33,11 @@
         <div class="modal-body">
           <div class="card">
             <div class="card-body">
-              <form>
+            <form action="{{route('reservation.store')}}" method="POST">
+              @csrf
                   <div class="form-group">
                     <label for="user">Guest Name</label>
-                    <input type="text" class="form-control" name="clin_name" id="user" placeholder="Name" required>
+                    <input type="text" class="form-control" name="guest_name" id="user" placeholder="Name" required>
                   </div>
                   <div class="form-group">
                     <label for="checkin">Check In Date</label>
@@ -48,7 +49,7 @@
                   </div>
                   <div class="form-group form-inline">
                     <label for="service">Service Booked: </label>
-                    <select name="service">
+                    <select name="service_booked">
                       <option>Events Services</option>
                       <option>Restaurant Services</option>
                       <option>Recreational Services</option>
@@ -57,15 +58,15 @@
                   </div>
                   <div class="form-group">
                     <label for="cust_phone">Phone</label>
-                    <input type="text" class="form-control" name="customer_phone" id="cust_phone" placeholder="Phone Number" required>
+                    <input type="text" class="form-control" name="guest_phone" id="cust_phone" placeholder="Phone Number" required>
                   </div>
                   <div class="form-group">
                     <label for="cus_mail">Email</label>
-                    <input type="text" class="form-control" name="customer_mail" id="cust_mail" placeholder="Email Adress" required>
+                    <input type="text" class="form-control" name="guest_email" id="cust_mail" placeholder="Email Adress" required>
                   </div>
                   <div class="form-group">
                     <label for="cust_msg">Booking Message</label>
-                    <textarea class="form-control" name="message" id="cust_msg" rows="2" placeholder="Enter the Text Message Here....."></textarea>
+                    <textarea class="form-control" name="book_message" id="cust_msg" rows="2" placeholder="Enter the Text Message Here....."></textarea>
                   </div>
                   <button type="submit" class="btn btn-primary">Submit</button>
                   <button type="button" class="btn btn-danger" data-dismiss="modal">Reset</button>
@@ -115,20 +116,26 @@
                     </tr>
                   </tfoot>
                   <tbody>
+                    @foreach ($reservations as $reservation)
                     <tr>
-                      <th>01</th>
-                      <td>Tiger Nixon</td>
-                      <td>05/01/2020</td>
-                      <td>08/01/2020</td>
-                      <td>Wedding Party</td>
-                      <td>0700456382</td>
-                      <td>cecysly@mail.com</td>
-                      <td>Msiniangushe manze!</td>
+                    <th>{{$reservation->id}}</th>
+                      <td>{{$reservation->guest_name}}</td>
+                      <td>{{$reservation->check_in}}</td>
+                      <td>{{$reservation->check_out}}</td>
+                      <td>{{$reservation->service_booked}}</td>
+                      <td>{{$reservation->guest_phone}}</td>
+                      <td>{{$reservation->guest_email}}</td>
+                      <td>{{$reservation->book_message}}</td>
                       <td>
-                        <a  href="" class="btn btn-info fa fa-edit btn-sm"></a>
-                        <a  href="" class="btn btn-danger fa fa-trash-alt btn-sm"></a>
+                      <a  href="{{action('ReservationController@edit', $reservation->id)}}" class="btn btn-info fa fa-edit btn-sm"></a>
+                      <form action="{{action('ReservationController@destroy', $reservation->id)}}" method="POST">
+                        @csrf
+                      <input type="hidden" name="_method" value="DELETE">
+                      <button class="btn btn-danger fa fa-trash-alt btn-sm"></button>
+                      </form>
                       </td>
                     </tr>
+                    @endforeach
                   </tbody>
                 </table>
               </div>

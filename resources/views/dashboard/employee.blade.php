@@ -33,7 +33,8 @@
         <div class="modal-body">
           <div class="card">
             <div class="card-body">
-              <form>
+            <form action="{{route('employee.store')}}" method="POST" enctype="multipart/form-data">
+              @csrf
                   <div class="form-group form-inline">
                     <label for="user">Name: </label>
                     <input type="name" name="name" class="form-control" id="user" placeholder="Name">
@@ -61,13 +62,15 @@
                 <div class="form-group form-inline">
                   <label for="gen">Gender: </label>
                   <select name="gender">
+                    <option>--select gender--</option>
                     <option>Male</option>
                     <option>Female</option>
                   </select>
                 </div>
                 <div class="form-group form-inline">
-                  <label for="img">Image: </label>
-                  <input type="text" name="image" class="form-control" id="img" placeholder="Fix Image Here">
+                  <label for="image">Image: </label>
+                  <input type="file" name="image" class="form-control" id="image"  placeholder="Upload the Image Here"
+                   onchange="return imageval()">
                 </div>
                   <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                   <button type="submit" class="btn btn-info">Submit</button>
@@ -119,21 +122,27 @@
                     </tr>
                   </tfoot>
                   <tbody>
+                    @foreach ($employees as $employee)
                     <tr>
-                      <th>01</th>
-                      <td>Donna Snider</td>
-                      <td>donna@mail.com</td>
-                      <td>+25471234567</td>
-                      <td>27512390</td>
-                      <td>Mombasa</td>
-                      <td>Chief Chef</td>
-                      <td>Male</td>
-                      <td>image</td>
+                    <th>{{$employee->id}}</th>
+                      <td>{{$employee->name}}</td>
+                      <td>{{$employee->email}}</td>
+                      <td>{{$employee->phone}}</td>
+                      <td>{{$employee->id_no}}</td>
+                      <td>{{$employee->location}}</td>
+                      <td>{{$employee->role}}</td>
+                      <td>{{$employee->gender}}</td>
+                    <td><img class="img-responsive" style="width:50px" src="{{asset('pictures/'.$employee->image)}}"/></td>
                       <td>
-                        <a  href="" class="btn btn-info fa fa-edit btn-sm"></a>
-                        <a  href="" class="btn btn-danger fa fa-trash-alt btn-sm"></a>
+                      <a  href="{{action('EmployeeController@edit', $employee->id)}}" class="btn btn-info fa fa-edit btn-sm"></a>
+                      <form action="{{action('EmployeeController@destroy', $employee->id)}}" method="post">
+                      @csrf
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button class="btn btn-danger fa fa-trash-alt btn-sm"></button>
+                      </form>
                       </td>
                     </tr>
+                    @endforeach
                   </tbody>
                 </table>
               </div>

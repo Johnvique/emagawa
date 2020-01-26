@@ -36,7 +36,12 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $menus = new Menu;
+        $menus->service_name=$request->get('service_name');
+        $menus->service_price=$request->get('service_price');
+        
+        $menus->save();
+        return redirect()->back();
     }
 
     /**
@@ -56,9 +61,13 @@ class MenuController extends Controller
      * @param  \App\Menu  $menu
      * @return \Illuminate\Http\Response
      */
-    public function edit(Menu $menu)
+    public function edit($id)
     {
-        //
+        $menu = Menu::find($id);
+        return view ('dashboard/menu_edit',compact('menu'));
+
+        return redirect();
+
     }
 
     /**
@@ -68,9 +77,14 @@ class MenuController extends Controller
      * @param  \App\Menu  $menu
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Menu $menu)
+    public function update(Request $request,$id)
     {
-        //
+        $menu= Menu::find($id);
+        $menu->update([
+            "service_name"=>$request->service_name,
+            "service_price"=>$request->service_price,
+        ]);
+        return redirect('menu');
     }
 
     /**
@@ -79,8 +93,11 @@ class MenuController extends Controller
      * @param  \App\Menu  $menu
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Menu $menu)
+    public function destroy($id)
     {
-        //
+        $menu = Menu::find($id);
+        $menu->delete();
+
+        return redirect('menu');
     }
 }

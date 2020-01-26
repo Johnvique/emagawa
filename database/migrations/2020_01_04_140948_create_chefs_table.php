@@ -15,6 +15,13 @@ class CreateChefsTable extends Migration
     {
         Schema::create('chefs', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('email');
+            $table->string('phone');
+            $table->string('id_no');
+            $table->string('experience');
+            $table->string('gender');
+            $table->string('image');
             $table->timestamps();
         });
     }
